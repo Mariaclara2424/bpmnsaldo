@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluxo Operacional Saldo+</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #002364;
+    --cyan: #00B4D8;
+    --orange: #F28C28;
+    --magenta: #C2185B;
+    --bg: #F5F7FB;
+    --card: #FFFFFF;
+    --text: #1B2433;
+    --muted: #5A6475;
+    --line: #D7DDE8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Poppins", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header { background: var(--navy); color: #fff; padding: 28px 32px; }
+  header h1 { margin: 0 0 4px; font-size: 24px; font-weight: 600; }
+  header p { margin: 0; opacity: .85; font-size: 14px; }
+  main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 48px; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  h2 { margin: 0 0 6px; font-size: 18px; color: var(--navy); font-weight: 600; }
+  .sub { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+  .steps { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .steps span {
+    font-size: 12px; font-weight: 500;
+    padding: 6px 12px; border-radius: 999px;
+    background: #E8EEF9; color: var(--navy);
+  }
+  .steps span b { color: var(--orange); margin-right: 4px; }
+  .flow-summary {
+    font-size: 12.5px; color: var(--muted);
+    background: #F8FAFD; border: 1px solid var(--line);
+    border-radius: 8px; padding: 12px 14px; margin-bottom: 18px;
+  }
+  .flow-summary b { color: var(--navy); }
+  .diagram {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+  }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram.zoom svg { width: 3860px; height: 562px; }
+  .toolbar { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 8px; }
+  .toolbar button {
+    font-family: inherit; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--navy); background: #fff; color: var(--navy);
+    padding: 6px 14px; border-radius: 999px; cursor: pointer;
+  }
+  .toolbar button.on { background: var(--navy); color: #fff; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    margin-top: 14px; font-size: 12px; color: var(--muted);
+    align-items: center;
+  }
+  .legend div { display: flex; align-items: center; gap: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td {
+    border: 1px solid var(--line);
+    padding: 9px 10px; text-align: left; vertical-align: top;
+  }
+  th { background: var(--navy); color: #fff; font-weight: 500; }
+  tbody tr:nth-child(even) td { background: #F8FAFD; }
+  .table-wrap { overflow-x: auto; }
+  td.c { text-align: center; font-weight: 600; width: 92px; }
+  td ul { margin: 0; padding-left: 18px; }
+  .R { color: var(--orange); }
+  .A { color: var(--magenta); }
+  .C { color: #0089A8; }
+  .I { color: var(--muted); }
+  .phase td { background: #E8EEF9 !important; font-weight: 600; color: var(--navy); }
+  code { background: #EEF2F8; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+  .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  @media print {
+    @page { size: A3 landscape; margin: 10mm; }
+    body { background: #fff; }
+    section { break-inside: avoid; border: none; padding: 0 0 16px; }
+    .diagram { overflow: visible; border: none; }
+    .diagram svg { width: 100%; height: auto; }
+    .toolbar { display: none; }
+    header, th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Processo BPMN — Gestão e Operação dos Projetos</h1>
+  <p>Saldo+ · Da inscrição do parceiro ao envio semanal dos relatórios na plataforma Ludos Pro</p>
+</header>
+
+<main>
+
+<section>
+  <h2>1. Fluxo BPMN</h2>
+  <p class="sub">Etapas de gestão do projeto e atividades técnicas e operacionais para disponibilizar, acompanhar e reportar a execução na plataforma.</p>
+
+  <div class="steps">
+    <span><b>1</b>Inscrição e formalização</span>
+    <span><b>2</b>Criação ou duplicação do curso</span>
+    <span><b>3</b>Turmas e acessos de gestão</span>
+    <span><b>4</b>Experiência do parceiro</span>
+    <span><b>5</b>Cadastro dos participantes</span>
+    <span><b>6</b>Aprovação e liberação</span>
+    <span><b>7</b>Acessos, kick-off e suporte</span>
+    <span><b>8</b>Monitoramento</span>
+    <span><b>9</b>Relatórios</span>
+    <span><b>10</b>Envio semanal</span>
+  </div>
+
+  <div class="flow-summary">
+    <b>Fluxo resumido:</b> Inscrição → Formalização → Relatório/Listagem → Duplicação ou criação do curso → Novo ID do curso → Criação das turmas → Acessos dos gestores → Ranking / Roda de Apoio / Boas-vindas → Identidade visual → Cadastro dos participantes via API → Associação às turmas → Aprovação → Liberação → Envio dos logins → Live de kick-off → Suporte (dúvidas e novos logins) → Monitoramento → Consolidação dos dados → Relatório HTML → Lista de e-mails → Envio semanal → Monitoramento contínuo
+  </div>
+  <div class="diagram zoom" id="diagram">
+  <svg id="bpmn" viewBox="0 0 3860 562" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" font-family="Poppins, Arial, sans-serif">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#002364"/>
+      </marker>
+      <style>
+        .lane { fill: #FFFFFF; stroke: #C9D2E3; }
+        .lane-alt { fill: #F7F9FC; stroke: #C9D2E3; }
+        .lane-label { fill: #002364; }
+        .lane-text { fill: #FFFFFF; font-size: 12px; font-weight: 600; }
+        .task { fill: #FFFFFF; stroke: #002364; stroke-width: 1.6; }
+        .task-key { fill: #FFF6EC; stroke: #F28C28; stroke-width: 2; }
+        .t { font-size: 11.5px; fill: #1B2433; text-anchor: middle; }
+        .tb { font-size: 11.5px; fill: #1B2433; text-anchor: middle; font-weight: 600; }
+        .flow { fill: none; stroke: #002364; stroke-width: 1.5; marker-end: url(#arr); }
+        .gw { fill: #FFFFFF; stroke: #C2185B; stroke-width: 2; }
+        .gwx { font-size: 18px; fill: #C2185B; text-anchor: middle; font-weight: 700; }
+        .lbl { font-size: 11px; fill: #C2185B; font-weight: 600; }
+        .glbl { font-size: 10.5px; fill: #5A6475; text-anchor: middle; }
+        .start { fill: #FFFFFF; stroke: #0A9F5A; stroke-width: 2; }
+        .end { fill: #FFFFFF; stroke: #C2185B; stroke-width: 4; }
+        .ev { font-size: 10.5px; fill: #5A6475; text-anchor: middle; }
+        .badge { fill: #F28C28; }
+        .badge-t { font-size: 10.5px; fill: #FFFFFF; font-weight: 700; text-anchor: middle; }
+      </style>
+    </defs>
+
+    <!-- Raias -->
+    <rect class="lane" x="0" y="0" width="3860" height="140"/>
+    <rect class="lane-alt" x="0" y="140" width="3860" height="140"/>
+    <rect class="lane" x="0" y="280" width="3860" height="140"/>
+    <rect class="lane-alt" x="0" y="420" width="3860" height="140"/>
+
+    <rect class="lane-label" x="0" y="0" width="54" height="140" stroke="#fff"/>
+    <rect class="lane-label" x="0" y="140" width="54" height="140" stroke="#fff"/>
+    <rect class="lane-label" x="0" y="280" width="54" height="140" stroke="#fff"/>
+    <rect class="lane-label" x="0" y="420" width="54" height="140" stroke="#fff"/>
+
+    <text class="lane-text" transform="translate(27,70) rotate(-90)" text-anchor="middle"><tspan x="0" dy="-3">Parceiro /</tspan><tspan x="0" dy="15">Gestor Escolar</tspan></text>
+    <text class="lane-text" transform="translate(27,210) rotate(-90)" text-anchor="middle"><tspan x="0" dy="-3">Gestão de</tspan><tspan x="0" dy="15">Projetos</tspan></text>
+    <text class="lane-text" transform="translate(27,350) rotate(-90)" text-anchor="middle"><tspan x="0" dy="4">Operações / TI</tspan></text>
+    <text class="lane-text" transform="translate(27,490) rotate(-90)" text-anchor="middle"><tspan x="0" dy="-3">Professor /</tspan><tspan x="0" dy="15">Participante</tspan></text>
+
+    <!-- ===== Parceiro ===== -->
+    <circle class="start" cx="90" cy="70" r="18"/>
+    <text class="ev" x="90" y="106">Inscrição</text>
+    <text class="ev" x="90" y="119">do parceiro</text>
+    <path class="flow" d="M108,70 L148,70"/>
+
+    <rect class="task" x="150" y="40" width="130" height="60" rx="10"/>
+    <text class="t" x="215" y="62">Enviar inscrição,</text>
+    <text class="t" x="215" y="77">formalização e</text>
+    <text class="t" x="215" y="92">listagem</text>
+    <path class="flow" d="M215,100 L215,210 L318,210"/>
+
+    <!-- 1 Formalizar (GP) -->
+    <rect class="task-key" x="320" y="180" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="332" cy="180" r="10"/><text class="badge-t" x="332" y="184">1</text>
+    <text class="tb" x="385" y="199">Organizar,</text>
+    <text class="tb" x="385" y="214">conferir e validar</text>
+    <text class="t" x="385" y="229">dados do parceiro</text>
+    <path class="flow" d="M450,210 L486,210"/>
+
+    <!-- G1 -->
+    <polygon class="gw" points="510,188 532,210 510,232 488,210"/>
+    <text class="gwx" x="510" y="216">X</text>
+    <text class="glbl" x="556" y="252">Dados</text>
+    <text class="glbl" x="556" y="264">completos?</text>
+    <path class="flow" d="M510,188 L510,70 L282,70"/>
+    <text class="lbl" x="518" y="130">Não</text>
+
+    <!-- ===== Operações / TI ===== -->
+    <!-- G2 -->
+    <polygon class="gw" points="770,328 792,350 770,372 748,350"/>
+    <text class="gwx" x="770" y="356">X</text>
+    <text class="glbl" x="770" y="302">Parceiro já</text>
+    <text class="glbl" x="770" y="314">tem curso?</text>
+    <path class="flow" d="M792,350 L818,350"/>
+    <text class="lbl" x="794" y="343">Não</text>
+    <path class="flow" d="M770,372 L770,404 L1065,404 L1065,382"/>
+    <text class="lbl" x="870" y="418">Sim — usar curso existente</text>
+
+    <!-- 2 Duplicar -->
+    <rect class="task-key" x="820" y="320" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="832" cy="320" r="10"/><text class="badge-t" x="832" y="324">2</text>
+    <text class="tb" x="885" y="339">Duplicar curso-base</text>
+    <text class="tb" x="885" y="354">e gerar novo ID</text>
+    <text class="t" x="885" y="369">(ajustes do curso)</text>
+    <path class="flow" d="M950,350 L998,350"/>
+
+    <!-- 3 Turmas -->
+    <rect class="task-key" x="1000" y="320" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="1012" cy="320" r="10"/><text class="badge-t" x="1012" y="324">3</text>
+    <text class="tb" x="1065" y="339">Criar turmas,</text>
+    <text class="tb" x="1065" y="354">associar ao curso</text>
+    <text class="t" x="1065" y="369">+ acessos gestores</text>
+    <path class="flow" d="M1130,350 L1158,350"/>
+
+    <!-- 4 Experiência -->
+    <rect class="task-key" x="1160" y="320" width="140" height="60" rx="10"/>
+    <circle class="badge" cx="1172" cy="320" r="10"/><text class="badge-t" x="1172" y="324">4</text>
+    <text class="tb" x="1230" y="339">Ranking, Roda de</text>
+    <text class="tb" x="1230" y="354">Apoio, boas-vindas</text>
+    <text class="t" x="1230" y="369">e identidade visual</text>
+    <path class="flow" d="M1300,350 L1318,350"/>
+
+    <!-- 5 Cadastro -->
+    <rect class="task-key" x="1320" y="320" width="150" height="60" rx="10"/>
+    <circle class="badge" cx="1332" cy="320" r="10"/><text class="badge-t" x="1332" y="324">5</text>
+    <text class="tb" x="1395" y="339">Cadastrar participantes</text>
+    <text class="tb" x="1395" y="354">via API e associar</text>
+    <text class="t" x="1395" y="369">(ID do curso)</text>
+    <path class="flow" d="M1470,350 L1498,350"/>
+
+    <!-- G3 -->
+    <polygon class="gw" points="1520,328 1542,350 1520,372 1498,350"/>
+    <text class="gwx" x="1520" y="356">X</text>
+    <text class="glbl" x="1520" y="302">Inconsistências</text>
+    <text class="glbl" x="1520" y="314">no retorno da API?</text>
+    <path class="flow" d="M1520,372 L1520,404 L1395,404 L1395,382"/>
+    <text class="lbl" x="1420" y="418">Sim — corrigir</text>
+    <path class="flow" d="M1542,350 L1655,350 L1655,242"/>
+    <text class="lbl" x="1550" y="343">Não</text>
+
+    <!-- ===== Gestão de Projetos ===== -->
+    <!-- 6 Aprovação -->
+    <rect class="task-key" x="1590" y="180" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="1602" cy="180" r="10"/><text class="badge-t" x="1602" y="184">6</text>
+    <text class="tb" x="1655" y="206">Conferência final,</text>
+    <text class="tb" x="1655" y="221">aprovar e liberar</text>
+    <path class="flow" d="M1720,210 L1758,210"/>
+
+    <!-- G4 -->
+    <polygon class="gw" points="1780,188 1802,210 1780,232 1758,210"/>
+    <text class="gwx" x="1780" y="216">X</text>
+    <text class="glbl" x="1780" y="252">Tudo</text>
+    <text class="glbl" x="1780" y="264">funcionando?</text>
+    <path class="flow" d="M1780,188 L1780,158 L1230,158 L1230,318"/>
+    <text class="lbl" x="1420" y="152">Não — ajustar configuração</text>
+    <path class="flow" d="M1802,210 L1915,210 L1915,318"/>
+    <text class="lbl" x="1810" y="203">Sim</text>
+
+    <!-- 7 Logins (TI) -->
+    <rect class="task-key" x="1850" y="320" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="1862" cy="320" r="10"/><text class="badge-t" x="1862" y="324">7</text>
+    <text class="tb" x="1915" y="339">Gerar e enviar</text>
+    <text class="tb" x="1915" y="354">logins a professores</text>
+    <text class="t" x="1915" y="369">e participantes</text>
+
+    <!-- ===== Professor / Participante ===== -->
+    <rect class="task" x="2190" y="460" width="130" height="60" rx="10"/>
+    <text class="t" x="2255" y="486">Acessar a</text>
+    <text class="t" x="2255" y="501">plataforma</text>
+    <path class="flow" d="M2320,490 L2358,490"/>
+
+    <!-- G5 -->
+    <polygon class="gw" points="2380,468 2402,490 2380,512 2358,490"/>
+    <text class="gwx" x="2380" y="496">X</text>
+    <text class="glbl" x="2380" y="452">Problema</text>
+    <text class="glbl" x="2380" y="464">de acesso?</text>
+    <path class="flow" d="M2380,512 L2380,552 L1950,552 L1950,382"/>
+    <text class="lbl" x="2060" y="546">Sim — ajustar acesso</text>
+    <path class="flow" d="M2402,490 L2438,490"/>
+    <text class="lbl" x="2408" y="483">Não</text>
+
+    <rect class="task" x="2440" y="460" width="130" height="60" rx="10"/>
+    <text class="t" x="2505" y="486">Realizar a trilha</text>
+    <text class="t" x="2505" y="501">em sala</text>
+
+    <!-- 8 Monitoramento (TI) -->
+    <rect class="task-key" x="2800" y="320" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="2812" cy="320" r="10"/><text class="badge-t" x="2812" y="324">8</text>
+    <text class="tb" x="2865" y="339">Monitorar uso e</text>
+    <text class="tb" x="2865" y="354">indicadores</text>
+    <text class="t" x="2865" y="369">(banco de dados)</text>
+    <path class="flow" d="M2930,350 L2968,350"/>
+
+    <!-- G6 -->
+    <polygon class="gw" points="2990,328 3012,350 2990,372 2968,350"/>
+    <text class="gwx" x="2990" y="356">X</text>
+    <text class="glbl" x="2990" y="302">Dados</text>
+    <text class="glbl" x="2990" y="314">consistentes?</text>
+    <path class="flow" d="M2990,372 L2990,404 L2900,404 L2900,382"/>
+    <text class="lbl" x="2908" y="418">Não — verificar</text>
+    <path class="flow" d="M3012,350 L3048,350"/>
+    <text class="lbl" x="3016" y="343">Sim</text>
+
+    <!-- 9 Relatório -->
+    <rect class="task-key" x="3050" y="320" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="3062" cy="320" r="10"/><text class="badge-t" x="3062" y="324">9</text>
+    <text class="tb" x="3115" y="339">Consolidar dados</text>
+    <text class="tb" x="3115" y="354">e gerar relatório</text>
+    <text class="t" x="3115" y="369">em HTML</text>
+    <path class="flow" d="M3180,350 L3208,350"/>
+
+    <rect class="task" x="3210" y="320" width="130" height="60" rx="10"/>
+    <text class="t" x="3275" y="339">Gerar e conferir</text>
+    <text class="t" x="3275" y="354">lista de e-mails</text>
+    <text class="t" x="3275" y="369">(incluir novos)</text>
+    <path class="flow" d="M3340,350 L3368,350"/>
+
+    <!-- 10 Envio -->
+    <rect class="task-key" x="3370" y="320" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="3382" cy="320" r="10"/><text class="badge-t" x="3382" y="324">10</text>
+    <text class="tb" x="3435" y="339">Enviar relatório</text>
+    <text class="tb" x="3435" y="354">semanal</text>
+    <text class="t" x="3435" y="369">e registrar envio</text>
+    <path class="flow" d="M3500,350 L3595,350 L3595,242"/>
+
+    <!-- Análise (GP) -->
+    <rect class="task" x="3530" y="180" width="130" height="60" rx="10"/>
+    <text class="t" x="3595" y="199">Analisar indicadores</text>
+    <text class="t" x="3595" y="214">e acionar escolas</text>
+    <text class="t" x="3595" y="229">se necessário</text>
+    <path class="flow" d="M3660,210 L3698,210"/>
+
+    <!-- G7 -->
+    <polygon class="gw" points="3720,188 3742,210 3720,232 3698,210"/>
+    <text class="gwx" x="3720" y="216">X</text>
+    <text class="glbl" x="3720" y="252">Projeto em</text>
+    <text class="glbl" x="3720" y="264">execução?</text>
+    <path class="flow" d="M3720,188 L3720,158 L2865,158 L2865,318"/>
+    <text class="lbl" x="3150" y="152">Sim — repetir ciclo na próxima semana</text>
+    <path class="flow" d="M3742,210 L3772,210"/>
+    <text class="lbl" x="3746" y="203">Não</text>
+
+    <circle class="end" cx="3792" cy="210" r="18"/>
+    <text class="ev" x="3792" y="246">Encerramento</text>
+    <text class="ev" x="3792" y="259">do projeto</text>
+  
+    <!-- Suporte durante a trilha -->
+    <path class="flow" d="M2570,490 L2608,490"/>
+    <polygon class="gw" points="2630,468 2652,490 2630,512 2608,490"/>
+    <text class="gwx" x="2630" y="496">X</text>
+    <text class="glbl" x="2630" y="530">Dúvida ou</text>
+    <text class="glbl" x="2630" y="542">novo login?</text>
+    <path class="flow" d="M2630,468 L2630,382"/>
+    <text class="lbl" x="2638" y="440">Sim</text>
+    <rect class="task" x="2565" y="320" width="130" height="60" rx="10"/>
+    <text class="t" x="2630" y="339">Suporte: tirar</text>
+    <text class="t" x="2630" y="354">dúvidas e criar</text>
+    <text class="t" x="2630" y="369">novos logins</text>
+    <path class="flow" d="M2565,350 L2505,350 L2505,458"/>
+    <path class="flow" d="M2652,490 L2820,490 L2820,382"/>
+    <text class="lbl" x="2660" y="483">Não</text>
+
+    <!-- G1 Sim direto para Operações -->
+    <path class="flow" d="M510,232 L510,350 L746,350"/>
+    <text class="lbl" x="518" y="300">Sim</text>
+
+    <!-- Live de kick-off (depois do envio dos logins) -->
+    <path class="flow" d="M1980,350 L2055,350 L2055,242"/>
+    <rect class="task" x="1990" y="180" width="130" height="60" rx="10"/>
+    <text class="t" x="2055" y="199">Live de kick-off</text>
+    <text class="t" x="2055" y="214">com parceiro,</text>
+    <text class="t" x="2055" y="229">escolas e professores</text>
+    <path class="flow" d="M2120,210 L2255,210 L2255,458"/>
+    <text class="lbl" x="2388" y="530">Sim</text>
+</svg>
+  </div>
+
+  <div class="legend">
+    <div><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#0A9F5A" stroke-width="2"/></svg>Evento de início</div>
+    <div><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#C2185B" stroke-width="4"/></svg>Evento de fim</div>
+    <div><svg width="30" height="20"><rect x="1" y="2" width="28" height="16" rx="4" fill="#FFF6EC" stroke="#F28C28" stroke-width="2"/></svg>Etapa do processo (1 a 10)</div>
+    <div><svg width="30" height="20"><rect x="1" y="2" width="28" height="16" rx="4" fill="#fff" stroke="#002364" stroke-width="1.5"/></svg>Atividade de apoio</div>
+    <div><svg width="22" height="22"><polygon points="11,1 21,11 11,21 1,11" fill="#fff" stroke="#C2185B" stroke-width="2"/></svg>Decisão (gateway exclusivo)</div>
+  </div>
+</section>
+
+<section>
+  <h2>2. Detalhamento das etapas</h2>
+  <p class="sub">O que é feito em cada etapa e quem executa.</p>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th style="width:48px">Etapa</th><th style="width:190px">Atividade</th><th>O que fazer</th><th style="width:150px">Executa</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="c">1</td><td><b>Inscrição e formalização do parceiro</b></td>
+        <td><ul>
+          <li>Receber e organizar as informações necessárias para a inscrição do parceiro.</li>
+          <li>Enviar o relatório de inscrição, formalização e listagem dos participantes.</li>
+          <li>Conferir os dados e validar as informações antes da criação do ambiente na plataforma.</li>
+        </ul></td>
+        <td>Gestão de Projetos (com o Parceiro)</td>
+      </tr>
+      <tr>
+        <td class="c">2</td><td><b>Criação ou duplicação do curso</b></td>
+        <td><ul>
+          <li>Verificar se o parceiro já possui um curso configurado na plataforma.</li>
+          <li>Novo parceiro: duplicar o curso-base e criar uma nova identificação/ID específica.</li>
+          <li>Configurar as informações específicas do novo curso e realizar as adequações necessárias.</li>
+        </ul></td>
+        <td>Operações / TI</td>
+      </tr>
+      <tr>
+        <td class="c">3</td><td><b>Criação das turmas e acessos de gestão</b></td>
+        <td><ul>
+          <li>Criar as turmas correspondentes ao parceiro.</li>
+          <li>Associar as turmas ao curso correto.</li>
+          <li>Criar e configurar os acessos dos gestores responsáveis.</li>
+          <li>Validar se os gestores possuem as permissões necessárias para acompanhamento.</li>
+        </ul></td>
+        <td>Operações / TI</td>
+      </tr>
+      <tr>
+        <td class="c">4</td><td><b>Configuração da experiência do parceiro</b></td>
+        <td><ul>
+          <li>Configurar o ranking de acordo com as regras definidas para o projeto.</li>
+          <li>Configurar a Roda de Apoio e os demais recursos utilizados pelo parceiro.</li>
+          <li>Configurar a mensagem de boas-vindas.</li>
+          <li>Aplicar a identidade visual do parceiro (logo, cores e demais configurações).</li>
+          <li>Validar o ambiente antes da liberação aos participantes.</li>
+        </ul></td>
+        <td>Operações / TI</td>
+      </tr>
+      <tr>
+        <td class="c">5</td><td><b>Cadastro dos participantes</b></td>
+        <td><ul>
+          <li>Receber a listagem dos participantes e suas respectivas turmas.</li>
+          <li>Cadastrar os participantes por meio da API integrada ao sistema de cadastro (<code>/player/create</code>).</li>
+          <li>Associar cada participante à sua turma (<code>/player/add-player-group</code>).</li>
+          <li>Conferir os dados retornados pela API e verificar possíveis inconsistências.</li>
+          <li>Novo parceiro: garantir que os participantes estejam vinculados ao novo ID específico do curso.</li>
+        </ul></td>
+        <td>Operações / TI</td>
+      </tr>
+      <tr>
+        <td class="c">6</td><td><b>Aprovação e liberação do curso</b></td>
+        <td><ul>
+          <li>Realizar a conferência final das configurações.</li>
+          <li>Validar se turmas, participantes, gestores, identidade visual, ranking e demais configurações estão funcionando.</li>
+          <li>Aprovar e liberar o curso para utilização.</li>
+        </ul></td>
+        <td>Gestão de Projetos</td>
+      </tr>
+      <tr>
+        <td class="c">7</td><td><b>Envio dos acessos, live de kick-off e suporte durante a trilha</b></td>
+        <td><ul>
+          <li>Gerar ou organizar os logins dos professores e demais participantes.</li>
+          <li>Preparar a comunicação de acesso.</li>
+          <li>Enviar os dados de login aos professores.</li>
+          <li>Após o envio dos logins, realizar a live de kick-off com o parceiro, as escolas e os professores.</li>
+          <li>Acompanhar possíveis problemas de acesso e realizar os ajustes necessários.</li>
+          <li>Durante a trilha, prestar suporte aos professores e participantes em caso de dúvidas e criar novos logins quando necessário (participantes que entraram depois do cadastro inicial).</li>
+        </ul></td>
+        <td>Operações / TI</td>
+      </tr>
+      <tr>
+        <td class="c">8</td><td><b>Monitoramento</b></td>
+        <td><ul>
+          <li>Acompanhar a utilização da plataforma e a participação dos participantes e professores.</li>
+          <li>Monitorar indicadores de acesso, atividades realizadas, conclusão e demais métricas do projeto.</li>
+          <li>Utilizar o banco de dados e os sistemas de relatório para consolidar as informações.</li>
+          <li>Identificar inconsistências ou dados ausentes e realizar as verificações necessárias.</li>
+        </ul></td>
+        <td>Operações / TI</td>
+      </tr>
+      <tr>
+        <td class="c">9</td><td><b>Geração e preparação dos relatórios</b></td>
+        <td><ul>
+          <li>Criar e manter o sistema de relatórios utilizado no acompanhamento dos projetos.</li>
+          <li>Consolidar os dados necessários para o relatório semanal.</li>
+          <li>Preparar o relatório em HTML, com o layout e as informações definidas para o projeto.</li>
+          <li>Gerar a listagem de e-mails dos professores e demais participantes.</li>
+          <li>Conferir a lista de destinatários antes do envio e atualizá-la se houver novos professores ou participantes.</li>
+        </ul></td>
+        <td>Operações / TI (layout e conteúdo definidos pela Gestão de Projetos)</td>
+      </tr>
+      <tr>
+        <td class="c">10</td><td><b>Envio e acompanhamento semanal</b></td>
+        <td><ul>
+          <li>Enviar os relatórios semanalmente para os responsáveis e participantes definidos.</li>
+          <li>Registrar o envio e acompanhar possíveis problemas ou retornos.</li>
+          <li>Atualizar os dados e a lista de destinatários quando necessário.</li>
+          <li>Repetir o ciclo de monitoramento e geração dos relatórios durante a execução do projeto.</li>
+        </ul></td>
+        <td>Operações / TI</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>3. Matriz de Responsabilidades (RACI)</h2>
+  <p class="sub">
+    <b class="R">R</b> Responsável (executa) &nbsp;·&nbsp;
+    <b class="A">A</b> Aprovador (responde pelo resultado) &nbsp;·&nbsp;
+    <b class="C">C</b> Consultado &nbsp;·&nbsp;
+    <b class="I">I</b> Informado
+  </p>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Atividade</th>
+        <th style="text-align:center">Gestão de Projetos</th>
+        <th style="text-align:center">Operações / TI</th>
+        <th style="text-align:center">Parceiro / Gestor Escolar</th>
+        <th style="text-align:center">Professor</th>
+        <th style="text-align:center">Participante</th>
+        <th style="text-align:center">Ludos Pro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="phase"><td colspan="7">Gestão e formalização</td></tr>
+      <tr><td>Enviar inscrição, formalização e listagem</td>
+        <td class="c A">A</td><td class="c I">I</td><td class="c R">R</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td><b>1.</b> Organizar, conferir e validar os dados do parceiro</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c C">C</td><td class="c C">C</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+
+      <tr class="phase"><td colspan="7">Configuração da plataforma</td></tr>
+      <tr><td><b>2.</b> Verificar curso existente / duplicar curso e gerar novo ID</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td><td class="c C">C</td></tr>
+      <tr><td><b>3.</b> Criar turmas, associar ao curso e configurar acessos de gestores</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c C">C</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td><b>4.</b> Configurar ranking, Roda de Apoio, boas-vindas e identidade visual</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c C">C</td><td class="c">–</td><td class="c">–</td><td class="c C">C</td></tr>
+      <tr><td><b>5.</b> Cadastrar participantes via API e associar às turmas</td>
+        <td class="c I">I</td><td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c C">C</td><td class="c">–</td><td class="c">–</td><td class="c C">C</td></tr>
+      <tr><td><b>6.</b> Conferência final, aprovação e liberação do curso</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c C">C</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td><b>7.</b> Gerar e enviar logins; tratar problemas de acesso</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c I">I</td><td class="c C">C</td><td class="c I">I</td><td class="c">–</td></tr>
+      <tr><td>Live de kick-off com o parceiro, as escolas e os professores</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c C">C</td><td class="c C">C</td><td class="c C">C</td><td class="c I">I</td><td class="c">–</td></tr>
+      <tr><td>Suporte durante a trilha: dúvidas e criação de novos logins</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c I">I</td><td class="c C">C</td><td class="c C">C</td><td class="c C">C</td></tr>
+
+      <tr class="phase"><td colspan="7">Acompanhamento e relatórios</td></tr>
+      <tr><td>Acessar a plataforma e realizar a trilha</td>
+        <td class="c I">I</td><td class="c">–</td><td class="c">–</td><td class="c A">A</td><td class="c R">R</td><td class="c">–</td></tr>
+      <tr><td><b>8.</b> Monitorar uso e indicadores no banco de dados</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c I">I</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td><b>9.</b> Consolidar dados, gerar relatório HTML e lista de e-mails</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td><b>10.</b> Enviar relatório semanal e registrar o envio</td>
+        <td class="c A">A</td><td class="c R">R</td><td class="c I">I</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Analisar indicadores e acionar escolas quando necessário</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c C">C</td><td class="c C">C</td><td class="c C">C</td><td class="c">–</td><td class="c">–</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Cada atividade tem um único Aprovador (A). A Gestão de Projetos define o que é reportado, para quem e com que frequência; Operações/TI executa na plataforma, no banco de dados e no sistema de relatórios.</p>
+</section>
+
+</main>
+</body>
+</html>
