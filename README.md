@@ -42,7 +42,7 @@ A página também traz um quadro comparando os dois cursos-base: **Escolas** (pr
 | Gestão de Projetos | Formaliza o parceiro, aprova a configuração, conduz o kick-off e analisa os indicadores |
 | Operações / TI | Configura a plataforma, cadastra participantes, presta suporte, monitora dados e gera relatórios |
 | Parceiro / Gestor Escolar | Envia inscrição e listagem, valida informações da instituição |
-| Professor | Aplica a trilha em sala e acompanha a turma |
+| Educador | Aplica a trilha em sala e acompanha a turma |
 | Participante | Acessa a plataforma e realiza a trilha |
 | Ludos Pro | Suporte técnico da plataforma e da API |
 
