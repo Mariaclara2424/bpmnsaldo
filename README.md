@@ -16,12 +16,14 @@ Esta página documenta o processo operacional usado para colocar um parceiro na 
 2. **Detalhamento das etapas:** o que fazer em cada etapa e quem executa.
 3. **Matriz de Responsabilidades (RACI):** papel de cada agente em cada atividade.
 
+A página também traz um quadro comparando os dois cursos-base: **Escolas** (premiação por brindes) e **Participantes** (mecânica Grana Mais).
+
 ## Etapas do processo
 
 | Etapa | Atividade |
 |---|---|
-| 1 | Inscrição e formalização do parceiro |
-| 2 | Criação ou duplicação do curso (novo ID para novo parceiro) |
+| 1 | Envio dos formulários de inscrição e formalização, preenchimento pelo parceiro e validação |
+| 2 | Escolha do curso-base (Escolas ou Participantes) e duplicação do curso com novo ID |
 | 3 | Criação das turmas e acessos de gestão |
 | 4 | Configuração da experiência do parceiro (ranking, Roda de Apoio, boas-vindas e identidade visual) |
 | 5 | Cadastro dos participantes via API e associação às turmas |
@@ -31,7 +33,7 @@ Esta página documenta o processo operacional usado para colocar um parceiro na 
 | 9 | Geração e preparação dos relatórios (HTML e lista de e-mails) |
 | 10 | Envio e acompanhamento semanal |
 
-**Fluxo resumido:** Inscrição → Formalização → Listagem → Duplicação ou criação do curso → Novo ID do curso → Turmas → Acessos dos gestores → Ranking / Roda de Apoio / Boas-vindas → Identidade visual → Cadastro dos participantes via API → Associação às turmas → Aprovação → Liberação → Envio dos logins → Live de kick-off → Suporte → Monitoramento → Relatório HTML → Envio semanal → Monitoramento contínuo
+**Fluxo resumido:** Formulários de inscrição e formalização → Listagem → Validação → Escolha do curso-base → Duplicação do curso → Novo ID do curso → Turmas → Acessos dos gestores → Ranking / Roda de Apoio / Boas-vindas → Identidade visual → Cadastro dos participantes via API → Associação às turmas → Aprovação → Liberação → Envio dos logins → Live de kick-off → Suporte → Monitoramento → Relatório HTML → Envio semanal → Monitoramento contínuo
 
 ## Agentes envolvidos
 
