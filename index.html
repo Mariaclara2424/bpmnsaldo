@@ -89,6 +89,22 @@
   .phase td { background: #E8EEF9 !important; font-weight: 600; color: var(--navy); }
   code { background: #EEF2F8; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
   .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  /* ===== SLA ===== */
+  .sla-pill { font-size: 12px; font-weight: 600; color: #006C85; background: #E3F6FA; border-radius: 999px; padding: 2px 10px; white-space: nowrap; display: inline-block; }
+  .sla-pill.wk { color: #7A4300; background: #FFF1DF; }
+  .sla-pill.ev { color: var(--magenta); background: #FBE7EF; }
+  .sim { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-end; background: #F8FAFD; border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 16px; }
+  .sim label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 500; color: var(--navy); }
+  .sim label.chk { flex-direction: row; align-items: center; gap: 8px; padding-bottom: 8px; }
+  .sim input[type=date], .sim input[type=text] { font-family: inherit; font-size: 13px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--text); }
+  .sim input[type=text] { min-width: 260px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .kpi { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: #fff; }
+  .kpi span { display: block; font-size: 11.5px; color: var(--muted); }
+  .kpi b { display: block; font-size: 18px; color: var(--navy); font-weight: 600; margin-top: 2px; }
+  .kpi.hl { border-color: var(--orange); background: #FFF6EC; }
+  h3 { font-size: 14px; color: var(--navy); margin: 22px 0 8px; font-weight: 600; }
+  td.d { white-space: nowrap; font-weight: 500; }
   @media print {
     @page { size: A3 landscape; margin: 10mm; }
     body { background: #fff; }
@@ -629,6 +645,229 @@
   <p class="note">Cada atividade tem um único Aprovador (A). A Gestão de Projetos define o que é reportado, para quem e com que frequência; Operações/TI executa na plataforma, no banco de dados e no sistema de relatórios.</p>
 </section>
 
+<section id="sla">
+  <h2>4. Prazos por atividade (SLA)</h2>
+  <p class="sub">
+    Tempo máximo de cada atividade, contado em <b>dias úteis (d.u.)</b> a partir do gatilho de início.
+    <span class="sla-pill">⏱ prazo da etapa</span>&nbsp;
+    <span class="sla-pill wk">⏱ rotina semanal</span>&nbsp;
+    <span class="sla-pill ev">⏱ sob demanda</span>
+  </p>
+
+  <h3>Simulador de cronograma</h3>
+  <div class="sim">
+    <label>Entrada do novo parceiro
+      <input type="date" id="simInicio">
+    </label>
+    <label class="chk"><input type="checkbox" id="simTemCurso"> Parceiro já tem curso configurado</label>
+    <label>Feriados (opcional, dd/mm/aaaa separados por vírgula)
+      <input type="text" id="simFeriados" placeholder="ex.: 02/11/2026, 15/11/2026">
+    </label>
+  </div>
+  <div class="kpis" id="simKpis"></div>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th style="width:48px">Etapa</th><th>Atividade</th><th style="width:170px">Responsável</th><th style="width:110px">SLA</th><th style="width:130px">Prazo final</th></tr>
+    </thead>
+    <tbody id="simBody"></tbody>
+  </table>
+  </div>
+  <p class="note">O cronograma considera sábados, domingos e os feriados informados. Cada prazo começa a contar no dia em que a atividade anterior foi concluída; atrasos em uma etapa empurram as seguintes.</p>
+
+  <h3>Tabela de SLAs</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th style="width:48px">Etapa</th><th>Atividade</th><th style="width:170px">Responsável</th><th style="width:200px">O prazo começa quando</th><th style="width:120px">SLA</th><th style="width:200px">Se estourar, acionar</th></tr>
+    </thead>
+    <tbody id="slaBody"></tbody>
+  </table>
+  </div>
+
+  <h3>Prazos dos retornos (decisões com "Não")</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th style="width:200px">Decisão</th><th>Retorno</th><th style="width:170px">Responsável</th><th style="width:120px">SLA</th></tr>
+    </thead>
+    <tbody id="retBody"></tbody>
+  </table>
+  </div>
+  <p class="note">Os prazos são uma proposta inicial. Para ajustar, altere apenas os valores na lista <code>SLA</code> e <code>RETORNOS</code> no final do arquivo: o diagrama, as tabelas e o simulador se atualizam juntos.</p>
+</section>
+
 </main>
+
+<script>
+/* =====================================================================
+   SLA POR ATIVIDADE — edite somente aqui.
+   tipo: "seq"    = etapa do caminho principal (entra no simulador)
+         "evento" = sob demanda (conta a partir do pedido)
+         "semanal"= rotina semanal (dia = 1 seg ... 5 sex)
+   pos:  [x, y] da base da tarefa no diagrama, para o selo de prazo
+   ===================================================================== */
+const SLA = [
+  { fase: "Gestão e formalização" },
+  { etapa: "",   atividade: "Enviar formulários de inscrição e formalização", resp: "Gestão de Projetos",        tipo: "seq", dias: 1, inicio: "Entrada do novo parceiro", escala: "Coordenação do projeto", pos: [[175,240]] },
+  { etapa: "",   atividade: "Preencher formulários e enviar listagem de participantes", resp: "Parceiro / Gestor Escolar", tipo: "seq", dias: 5, inicio: "Recebimento dos formulários", escala: "Gestão de Projetos cobra o parceiro", pos: [[270,100]] },
+  { etapa: "1",  atividade: "Conferir e validar formulários e listagem", resp: "Gestão de Projetos",        tipo: "seq", dias: 2, inicio: "Recebimento da listagem", escala: "Coordenação do projeto", pos: [[385,240]] },
+  { fase: "Configuração da plataforma" },
+  { etapa: "2",  atividade: "Escolher curso-base, duplicar e gerar novo ID", resp: "Operações / TI", tipo: "seq", dias: 3, soNovo: true, inicio: "Validação aprovada", escala: "Gestão de Projetos", pos: [[1010,380],[1010,465]] },
+  { etapa: "3",  atividade: "Criar turmas, associar ao curso e acessos dos gestores", resp: "Operações / TI", tipo: "seq", dias: 5, rotulo: "1 semana (5 d.u.)", inicio: "Curso com ID definido", escala: "Gestão de Projetos", pos: [[1235,297]] },
+  { etapa: "4",  atividade: "Ranking, Roda de Apoio, boas-vindas e identidade visual", resp: "Operações / TI", tipo: "seq", dias: 3, inicio: "Turmas criadas", escala: "Gestão de Projetos", pos: [[1400,380]] },
+  { etapa: "5",  atividade: "Cadastrar participantes via API e associar às turmas", resp: "Operações / TI", tipo: "seq", dias: 1, inicio: "Experiência configurada", escala: "Gestão de Projetos", pos: [[1565,380]] },
+  { etapa: "6",  atividade: "Conferência final, aprovação e liberação do curso", resp: "Gestão de Projetos", tipo: "seq", dias: 5, rotulo: "1 semana (5 d.u.)", inicio: "Cadastro concluído sem inconsistências", escala: "Coordenação do projeto", pos: [[1825,240]] },
+  { fase: "Acessos e início da trilha" },
+  { etapa: "7",  atividade: "Gerar e enviar logins a educadores e participantes", resp: "Operações / TI", tipo: "seq", dias: 3, inicio: "Curso liberado", escala: "Gestão de Projetos", pos: [[2085,380]] },
+  { etapa: "",   atividade: "Live de kick-off com parceiro, escolas e educadores", resp: "Gestão de Projetos", tipo: "seq", dias: 10, rotulo: "2 semanas de antecedência", curto: "⏱ 2 sem.", inicio: "Logins enviados (convite sai no mesmo dia)", escala: "Coordenação do projeto", pos: [[2225,240]] },
+  { etapa: "",   atividade: "Suporte: responder dúvidas e criar novos logins", resp: "Operações / TI", tipo: "evento", dias: 2, inicio: "Pedido do educador ou participante", escala: "Gestão de Projetos", pos: [[2800,380]] },
+  { fase: "Acompanhamento e relatórios (ciclo semanal)" },
+  { etapa: "8",  atividade: "Monitorar uso e indicadores no banco de dados", resp: "Operações / TI", tipo: "semanal", dia: 1, inicio: "Início da semana", escala: "Gestão de Projetos", pos: [[3035,380]] },
+  { etapa: "9",  atividade: "Consolidar dados, gerar relatório HTML e conferir lista de e-mails", resp: "Operações / TI", tipo: "semanal", dia: 5, rotulo: "5 dias úteis (seg a sex)", curto: "⏱ 5 d.u.", inicio: "Monitoramento concluído", escala: "Gestão de Projetos", pos: [[3285,380],[3445,380]] },
+  { etapa: "10", atividade: "Enviar relatório semanal e registrar o envio (inclui gerar os e-mails)", resp: "Operações / TI", tipo: "semanal", dia: 5, rotulo: "1 vez por semana", curto: "⏱ semanal", inicio: "Relatório e lista conferidos", escala: "Gestão de Projetos", pos: [[3605,380]] },
+  { etapa: "",   atividade: "Analisar indicadores e acionar escolas se necessário", resp: "Gestão de Projetos", tipo: "semanal", dia: 8, inicio: "Relatório enviado", escala: "Coordenação do projeto", pos: [[3765,240]] }
+];
+
+const RETORNOS = [
+  { decisao: "Dados completos?",              retorno: "Parceiro corrige as pendências e reenvia a listagem", resp: "Parceiro / Gestor Escolar", dias: 3 },
+  { decisao: "Inconsistências no retorno da API?", retorno: "Corrigir os cadastros com erro",                 resp: "Operações / TI",            dias: 1 },
+  { decisao: "Tudo funcionando?",             retorno: "Ajustar a configuração e reenviar para aprovação",    resp: "Operações / TI",            dias: 1 },
+  { decisao: "Problema de acesso?",           retorno: "Ajustar o acesso do educador ou participante",        resp: "Operações / TI",            dias: 1 },
+  { decisao: "Dados consistentes?",           retorno: "Verificar os dados antes de gerar o relatório",       resp: "Operações / TI",            dias: 1 }
+];
+
+/* ===================================================================== */
+const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+const DIAS_LONGO = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+
+function slaTexto(a) {
+  if (a.rotulo) return a.rotulo;
+  if (a.tipo === "semanal") return "Toda " + DIAS_LONGO[a.dia % 7] + (a.dia > 5 ? " seguinte" : "");
+  return a.dias + (a.dias === 1 ? " dia útil" : " dias úteis");
+}
+function slaCurto(a) {
+  if (a.curto) return a.curto;
+  if (a.tipo === "semanal") return "⏱ toda " + DIAS[a.dia % 7];
+  return "⏱ " + a.dias + " d.u.";
+}
+function pillClass(a) { return a.tipo === "semanal" ? "wk" : a.tipo === "evento" ? "ev" : ""; }
+
+/* ---- Selos no diagrama ---- */
+(function () {
+  const svg = document.getElementById("bpmn");
+  const ns = "http://www.w3.org/2000/svg";
+  const cores = { "": ["#E3F6FA", "#006C85"], wk: ["#FFF1DF", "#7A4300"], ev: ["#FBE7EF", "#C2185B"] };
+  SLA.filter(a => a.pos).forEach(a => {
+    const [bg, fg] = cores[pillClass(a)];
+    const txt = slaCurto(a);
+    const w = txt.length * 6.2 + 14;
+    a.pos.forEach(([x, y]) => {
+      const g = document.createElementNS(ns, "g");
+      const r = document.createElementNS(ns, "rect");
+      r.setAttribute("x", x - w / 2); r.setAttribute("y", y + 3);
+      r.setAttribute("width", w); r.setAttribute("height", 16); r.setAttribute("rx", 8);
+      r.setAttribute("fill", bg); r.setAttribute("stroke", fg); r.setAttribute("stroke-width", "0.8");
+      const t = document.createElementNS(ns, "text");
+      t.setAttribute("x", x); t.setAttribute("y", y + 15);
+      t.setAttribute("text-anchor", "middle"); t.setAttribute("font-size", "10.5");
+      t.setAttribute("font-weight", "600"); t.setAttribute("fill", fg);
+      t.textContent = txt;
+      const title = document.createElementNS(ns, "title");
+      title.textContent = "SLA: " + slaTexto(a) + " · começa: " + a.inicio;
+      g.append(r, t, title);
+      svg.appendChild(g);
+    });
+  });
+})();
+
+/* ---- Tabelas fixas ---- */
+(function () {
+  const body = document.getElementById("slaBody");
+  body.innerHTML = SLA.map(a => a.fase
+    ? `<tr class="phase"><td colspan="6">${a.fase}</td></tr>`
+    : `<tr><td class="c">${a.etapa}</td><td>${a.atividade}${a.soNovo ? " <i>(só novo parceiro)</i>" : ""}</td><td>${a.resp}</td><td>${a.inicio}</td><td><span class="sla-pill ${pillClass(a)}">${slaTexto(a)}</span></td><td>${a.escala}</td></tr>`
+  ).join("");
+  document.getElementById("retBody").innerHTML = RETORNOS.map(r =>
+    `<tr><td><b>${r.decisao}</b></td><td>${r.retorno}</td><td>${r.resp}</td><td><span class="sla-pill ev">${r.dias} ${r.dias === 1 ? "dia útil" : "dias úteis"}</span></td></tr>`
+  ).join("");
+})();
+
+/* ---- Simulador ---- */
+function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function fmt(d) { return DIAS[d.getDay()] + ", " + String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + d.getFullYear(); }
+function lerFeriados() {
+  const set = new Set();
+  document.getElementById("simFeriados").value.split(",").forEach(s => {
+    const m = s.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if (m) set.add(m[3] + "-" + m[2].padStart(2, "0") + "-" + m[1].padStart(2, "0"));
+  });
+  return set;
+}
+function util(d, fer) { return d.getDay() !== 0 && d.getDay() !== 6 && !fer.has(iso(d)); }
+function somarDU(d, n, fer) {
+  const r = new Date(d);
+  while (n > 0) { r.setDate(r.getDate() + 1); if (util(r, fer)) n--; }
+  return r;
+}
+function proxUtil(d, fer) { const r = new Date(d); while (!util(r, fer)) r.setDate(r.getDate() + 1); return r; }
+
+function simular() {
+  const v = document.getElementById("simInicio").value;
+  if (!v) return;
+  const [y, m, dd] = v.split("-").map(Number);
+  const fer = lerFeriados();
+  const temCurso = document.getElementById("simTemCurso").checked;
+  let atual = proxUtil(new Date(y, m - 1, dd), fer);
+  const inicio = new Date(atual);
+  let totalDU = 0, liberacao = null, kickoff = null;
+  const linhas = [];
+
+  SLA.forEach(a => {
+    if (a.fase) { linhas.push(`<tr class="phase"><td colspan="5">${a.fase}</td></tr>`); return; }
+    if (a.tipo !== "seq") return;
+    if (a.soNovo && temCurso) {
+      linhas.push(`<tr><td class="c">${a.etapa}</td><td style="color:var(--muted)">${a.atividade}</td><td>${a.resp}</td><td>—</td><td class="d" style="color:var(--muted)">não se aplica</td></tr>`);
+      return;
+    }
+    atual = somarDU(atual, a.dias, fer);
+    totalDU += a.dias;
+    if (a.etapa === "6") liberacao = new Date(atual);
+    if (/kick-off/i.test(a.atividade)) kickoff = new Date(atual);
+    linhas.push(`<tr><td class="c">${a.etapa}</td><td>${a.atividade}</td><td>${a.resp}</td><td><span class="sla-pill">${slaTexto(a)}</span></td><td class="d">${fmt(atual)}</td></tr>`);
+  });
+
+  // 1º ciclo semanal: semana seguinte ao kick-off
+  const seg = new Date(kickoff);
+  seg.setDate(seg.getDate() + ((8 - seg.getDay()) % 7 || 7));
+  let envio = null;
+  SLA.forEach(a => {
+    if (a.fase || a.tipo !== "semanal") return;
+    const d = new Date(seg); d.setDate(seg.getDate() + (a.dia - 1));
+    if (a.etapa === "10") envio = d;
+    linhas.push(`<tr><td class="c">${a.etapa}</td><td>${a.atividade} <i>(1º ciclo)</i></td><td>${a.resp}</td><td><span class="sla-pill wk">${slaTexto(a)}</span></td><td class="d">${fmt(d)}${util(d, fer) ? "" : " <i>(feriado: antecipar)</i>"}</td></tr>`);
+  });
+  // tira as fases da rotina que ficaram sem linhas
+  document.getElementById("simBody").innerHTML = linhas
+    .filter((l, i) => !(l.includes('class="phase"') && (linhas[i + 1] || "").includes('class="phase"')))
+    .join("");
+
+  document.getElementById("simKpis").innerHTML = `
+    <div class="kpi"><span>Início</span><b>${fmt(inicio)}</b></div>
+    <div class="kpi"><span>Curso liberado</span><b>${fmt(liberacao)}</b></div>
+    <div class="kpi hl"><span>Kick-off</span><b>${fmt(kickoff)}</b></div>
+    <div class="kpi"><span>Da entrada ao kick-off</span><b>${totalDU} dias úteis</b></div>
+    <div class="kpi"><span>1º relatório semanal</span><b>${fmt(envio)}</b></div>`;
+}
+
+(function () {
+  const hoje = new Date();
+  document.getElementById("simInicio").value = iso(hoje);
+  ["simInicio", "simTemCurso", "simFeriados"].forEach(id =>
+    document.getElementById(id).addEventListener("input", simular));
+  document.getElementById("simTemCurso").addEventListener("change", simular);
+  simular();
+})();
+</script>
 </body>
 </html>
