@@ -58,7 +58,7 @@
     background: #fff;
   }
   .diagram svg { display: block; width: 100%; height: auto; }
-  .diagram.zoom svg { width: 4030px; height: 642px; }
+  .diagram.zoom svg { width: 4690px; height: 642px; }
   .toolbar { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 8px; }
   .toolbar button {
     font-family: inherit; font-size: 12px; font-weight: 500;
@@ -119,18 +119,18 @@
 <body>
 
 <header>
-  <h1>Processo BPMN — Gestão e Operação dos Projetos</h1>
+  <h1>Processo BPMN (Business Process Model and Notation – Modelo e Notação de Processos de Negócio) — Gestão e Operação dos Projetos</h1>
   <p>Saldo+ · Da inscrição do parceiro ao envio semanal dos relatórios na plataforma Ludos Pro</p>
 </header>
 
 <main>
 
 <section>
-  <h2>1. Fluxo BPMN</h2>
+  <h2>1. Fluxo BPMN (Business Process Model and Notation – Modelo e Notação de Processos de Negócio)</h2>
   <p class="sub">Etapas de gestão do projeto e atividades técnicas e operacionais para disponibilizar, acompanhar e reportar a execução na plataforma.</p>
 
   <div class="steps">
-    <span><b>1</b>Formulários de inscrição e formalização</span>
+    <span><b>1</b>Inscrição, formalização e listagem</span>
     <span><b>2</b>Escolha do curso-base e duplicação</span>
     <span><b>3</b>Turmas e acessos de gestão</span>
     <span><b>4</b>Experiência do parceiro</span>
@@ -143,10 +143,10 @@
   </div>
 
   <div class="flow-summary">
-    <b>Fluxo resumido:</b> Envio dos formulários de inscrição e formalização → Preenchimento e envio da listagem pelo parceiro → Validação → Escolha do curso-base (Escolas ou Participantes) → Duplicação do curso → Novo ID do curso → Criação das turmas → Acessos dos gestores → Ranking / Roda de Apoio / Boas-vindas → Identidade visual → Cadastro dos participantes via API → Associação às turmas → Aprovação → Liberação → Envio dos logins → Live de kick-off → Suporte (dúvidas e novos logins) → Monitoramento → Consolidação dos dados → Relatório HTML → Lista de e-mails → Envio semanal → Monitoramento contínuo
+    <b>Fluxo resumido:</b> Envio do formulário de inscrição → Preenchimento pelo parceiro → Verificação de internet e laboratório de informática (sem infraestrutura, a trilha não é iniciada) → Envio do formulário de formalização → Preenchimento da formalização (se não enviar, cobrar) → Contato para pedir a listagem de participantes → Envio da listagem → Validação → Escolha do curso-base (Escolas ou Participantes) → Duplicação do curso → Novo ID (identificador) do curso → Criação das turmas → Acessos dos gestores → Ranking / Roda de Apoio / Boas-vindas → Identidade visual → Cadastro dos participantes via API (Application Programming Interface – Interface de Programação de Aplicações) → Associação às turmas → Aprovação → Liberação → Envio dos logins → Live de kick-off → Suporte (dúvidas e novos logins) → Monitoramento → Consolidação dos dados → Relatório HTML (HyperText Markup Language – linguagem de páginas web) → Lista de e-mails → Envio semanal → Monitoramento contínuo
   </div>
   <div class="diagram zoom" id="diagram">
-  <svg id="bpmn" viewBox="0 0 4030 642" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" font-family="Poppins, Arial, sans-serif">
+  <svg id="bpmn" viewBox="0 0 4690 642" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" font-family="Poppins, Arial, sans-serif">
     <defs>
       <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
         <path d="M0,0 L10,5 L0,10 z" fill="#002364"/>
@@ -174,10 +174,10 @@
     </defs>
 
     <!-- Raias -->
-    <rect class="lane" x="0" y="0" width="4030" height="140"/>
-    <rect class="lane-alt" x="0" y="140" width="4030" height="140"/>
-    <rect class="lane" x="0" y="280" width="4030" height="220"/>
-    <rect class="lane-alt" x="0" y="500" width="4030" height="140"/>
+    <rect class="lane" x="0" y="0" width="4690" height="140"/>
+    <rect class="lane-alt" x="0" y="140" width="4690" height="140"/>
+    <rect class="lane" x="0" y="280" width="4690" height="220"/>
+    <rect class="lane-alt" x="0" y="500" width="4690" height="140"/>
 
     <rect class="lane-label" x="0" y="0" width="54" height="140" stroke="#fff"/>
     <rect class="lane-label" x="0" y="140" width="54" height="140" stroke="#fff"/>
@@ -189,20 +189,89 @@
     <text class="lane-text" transform="translate(27,390) rotate(-90)" text-anchor="middle"><tspan x="0" dy="4">Operações / TI</tspan></text>
     <text class="lane-text" transform="translate(27,570) rotate(-90)" text-anchor="middle"><tspan x="0" dy="-3">Educador /</tspan><tspan x="0" dy="15">Participante</tspan></text>
 
-    <!-- ===== Parceiro ===== -->
 
+    <!-- ===== Início: inscrição, infraestrutura, formalização e listagem ===== -->
+    <circle class="start" cx="80" cy="210" r="18"/>
+    <text class="ev" x="80" y="246">Novo</text>
+    <text class="ev" x="80" y="259">parceiro</text>
+    <path class="flow" d="M98,210 L113,210"/>
 
-    <!-- 1 Formalizar (GP) -->
-    <rect class="task-key" x="320" y="180" width="130" height="60" rx="10"/>
-    <circle class="badge" cx="332" cy="180" r="10"/><text class="badge-t" x="332" y="184">1</text>
-    <path class="flow" d="M450,210 L486,210"/>
+    <rect class="task" x="115" y="180" width="130" height="60" rx="10"/>
+    <text class="t" x="180" y="206">Enviar formulário</text>
+    <text class="t" x="180" y="221">de inscrição</text>
+    <path class="flow" d="M180,180 L180,70 L198,70"/>
 
-    <!-- G1 -->
-    <polygon class="gw" points="510,188 532,210 510,232 488,210"/>
-    <text class="gwx" x="510" y="216">X</text>
-    <text class="glbl" x="556" y="252">Dados</text>
-    <text class="glbl" x="556" y="264">completos?</text>
+    <rect class="task" x="200" y="40" width="140" height="60" rx="10"/>
+    <text class="t" x="270" y="66">Preencher formulário</text>
+    <text class="t" x="270" y="81">de inscrição</text>
+    <path class="flow" d="M340,70 L395,70 L395,186"/>
 
+    <!-- GA: infraestrutura -->
+    <polygon class="gw" points="395,188 417,210 395,232 373,210"/>
+    <text class="gwx" x="395" y="216">X</text>
+    <text class="glbl" x="318" y="160">Escola tem internet e</text>
+    <text class="glbl" x="318" y="172">laboratório de informática?</text>
+    <path class="flow" d="M395,232 L395,248"/>
+    <text class="lbl" x="401" y="246">Não</text>
+    <circle class="end" cx="395" cy="262" r="12"/>
+    <text class="ev" x="442" y="260">Trilha não</text>
+    <text class="ev" x="442" y="273">iniciada</text>
+    <path class="flow" d="M417,210 L443,210"/>
+    <text class="lbl" x="420" y="203">Sim</text>
+
+    <rect class="task" x="445" y="180" width="130" height="60" rx="10"/>
+    <text class="t" x="510" y="206">Enviar formulário</text>
+    <text class="t" x="510" y="221">de formalização</text>
+    <path class="flow" d="M510,180 L510,70 L538,70"/>
+
+    <rect class="task" x="540" y="40" width="140" height="60" rx="10"/>
+    <text class="t" x="610" y="59">Preencher e enviar</text>
+    <text class="t" x="610" y="74">formulário de</text>
+    <text class="t" x="610" y="89">formalização</text>
+    <path class="flow" d="M680,70 L725,70 L725,186"/>
+
+    <!-- GB: formalização recebida -->
+    <polygon class="gw" points="725,188 747,210 725,232 703,210"/>
+    <text class="gwx" x="725" y="216">X</text>
+    <text class="glbl" x="790" y="158">Formalização</text>
+    <text class="glbl" x="790" y="170">recebida?</text>
+    <path class="flow" d="M725,232 L725,270 L665,270 L665,102"/>
+    <text class="lbl" x="732" y="256">Não — cobrar</text>
+    <text class="lbl" x="732" y="269">preenchimento</text>
+    <path class="flow" d="M747,210 L773,210"/>
+    <text class="lbl" x="750" y="203">Sim</text>
+
+    <rect class="task" x="775" y="180" width="130" height="60" rx="10"/>
+    <text class="t" x="840" y="199">Entrar em contato</text>
+    <text class="t" x="840" y="214">e pedir a listagem</text>
+    <text class="t" x="840" y="229">de participantes</text>
+    <path class="flow" d="M840,180 L840,70 L868,70"/>
+
+    <rect class="task" x="870" y="40" width="140" height="60" rx="10"/>
+    <text class="t" x="940" y="59">Preencher e enviar</text>
+    <text class="t" x="940" y="74">listagem de</text>
+    <text class="t" x="940" y="89">participantes</text>
+    <path class="flow" d="M1010,70 L1045,70 L1045,178"/>
+
+    <!-- 1 Validar listagem -->
+    <rect class="task-key" x="980" y="180" width="130" height="60" rx="10"/>
+    <circle class="badge" cx="992" cy="180" r="10"/><text class="badge-t" x="992" y="184">1</text>
+    <text class="tb" x="1045" y="199">Conferir e validar</text>
+    <text class="tb" x="1045" y="214">listagem de</text>
+    <text class="t" x="1045" y="229">participantes</text>
+    <path class="flow" d="M1110,210 L1146,210"/>
+
+    <!-- G1: dados completos -->
+    <polygon class="gw" points="1170,188 1192,210 1170,232 1148,210"/>
+    <text class="gwx" x="1170" y="216">X</text>
+    <text class="glbl" x="1216" y="252">Dados</text>
+    <text class="glbl" x="1216" y="264">completos?</text>
+    <path class="flow" d="M1170,188 L1170,20 L940,20 L940,38"/>
+    <text class="lbl" x="1178" y="40">Não — devolver com pendências</text>
+    <path class="flow" d="M1170,232 L1170,350 L1406,350"/>
+    <text class="lbl" x="1178" y="300">Sim</text>
+
+    <g id="resto" transform="translate(660,0)">
     <!-- ===== Operações / TI ===== -->
     <!-- G2 -->
     <polygon class="gw" points="770,328 792,350 770,372 748,350"/>
@@ -370,9 +439,6 @@
     <path class="flow" d="M2822,570 L2990,570 L2990,382"/>
     <text class="lbl" x="2830" y="563">Não</text>
 
-    <!-- G1 Sim direto para Operações -->
-    <path class="flow" d="M510,232 L510,350 L746,350"/>
-    <text class="lbl" x="518" y="300">Sim</text>
 
     <!-- Live de kick-off (depois do envio dos logins) -->
     <path class="flow" d="M2150,350 L2225,350 L2225,242"/>
@@ -382,29 +448,6 @@
     <text class="t" x="2225" y="229">escolas e educadores</text>
     <path class="flow" d="M2290,210 L2425,210 L2425,538"/>
     <text class="lbl" x="2558" y="610">Sim</text>
-
-    <!-- ===== Início: formulários de inscrição e formalização ===== -->
-    <circle class="start" cx="80" cy="210" r="18"/>
-    <text class="ev" x="80" y="246">Novo</text>
-    <text class="ev" x="80" y="259">parceiro</text>
-    <path class="flow" d="M98,210 L108,210"/>
-    <rect class="task" x="110" y="180" width="130" height="60" rx="10"/>
-    <text class="t" x="175" y="199">Enviar formulários</text>
-    <text class="t" x="175" y="214">de inscrição e</text>
-    <text class="t" x="175" y="229">formalização</text>
-    <path class="flow" d="M175,180 L175,70 L198,70"/>
-
-    <rect class="task" x="200" y="40" width="140" height="60" rx="10"/>
-    <text class="t" x="270" y="62">Preencher formulários</text>
-    <text class="t" x="270" y="77">e enviar listagem</text>
-    <text class="t" x="270" y="92">de participantes</text>
-    <path class="flow" d="M340,70 L385,70 L385,178"/>
-
-    <text class="tb" x="385" y="199">Conferir e validar</text>
-    <text class="tb" x="385" y="214">formulários</text>
-    <text class="t" x="385" y="229">e listagem</text>
-    <path class="flow" d="M510,188 L510,20 L270,20 L270,38"/>
-    <text class="lbl" x="518" y="40">Não — devolver com pendências</text>
 
     <!-- ===== Escolha do curso-base ===== -->
     <polygon class="gw" points="840,328 862,350 840,372 818,350"/>
@@ -432,6 +475,7 @@
 
     <path class="flow" d="M770,372 L770,482 L1255,482 L1255,382"/>
     <text class="lbl" x="1080" y="476">Sim — usar curso existente</text>
+    </g>
 </svg>
   </div>
 
@@ -454,24 +498,26 @@
     </thead>
     <tbody>
       <tr>
-        <td class="c">1</td><td><b>Formulários de inscrição e formalização do parceiro</b></td>
+        <td class="c">1</td><td><b>Inscrição, formalização e listagem de participantes</b></td>
         <td><ul>
-          <li><b>Envio:</b> a Gestão de Projetos envia ao parceiro os formulários de inscrição e de formalização.</li>
-          <li><b>Preenchimento:</b> o parceiro (ou gestor escolar) preenche os formulários e envia a listagem dos participantes.</li>
+          <li><b>Inscrição:</b> a Gestão de Projetos envia ao parceiro o formulário de inscrição, e o parceiro (ou gestor escolar) preenche.</li>
+          <li><b>Verificação de infraestrutura:</b> a Gestão de Projetos confere, pelas respostas da inscrição, se a escola tem internet e laboratório de informática para realizar a trilha. <b>Se não tiver, a trilha não é iniciada.</b></li>
+          <li><b>Formalização:</b> se a escola tiver a infraestrutura, a Gestão de Projetos envia o formulário de formalização. Se o parceiro não devolver preenchido, a Gestão de Projetos cobra o preenchimento.</li>
+          <li><b>Listagem:</b> com a formalização recebida, a Gestão de Projetos entra em contato com o parceiro para pedir a listagem dos participantes, e o parceiro preenche e envia.</li>
           <li><b>Informações necessárias:</b> dados da instituição e do responsável; modalidade (Escolas ou Participantes); escolas e turmas, quando houver; gestores e educadores responsáveis; listagem dos participantes por turma. <i>[Confirmar com os campos dos formulários atuais.]</i></li>
           <li><b>Validação:</b> a Gestão de Projetos confere se os campos obrigatórios estão preenchidos, se não há duplicidades e se cada participante tem turma/escola associada. Se faltar algo, devolve ao parceiro com a lista de pendências.</li>
         </ul></td>
-        <td>Gestão de Projetos (envio e validação) e Parceiro (preenchimento)</td>
+        <td>Gestão de Projetos (envios, verificação, cobrança e validação) e Parceiro (preenchimento)</td>
       </tr>
       <tr>
         <td class="c">2</td><td><b>Escolha do curso-base e duplicação do curso</b></td>
         <td><ul>
           <li>Verificar se o parceiro já possui um curso configurado na plataforma.</li>
           <li>Novo parceiro: identificar qual curso-base será usado, <b>Escolas</b> ou <b>Participantes</b> (ver quadro abaixo).</li>
-          <li>Duplicar o curso-base correspondente e criar uma nova identificação/ID específica.</li>
+          <li>Duplicar o curso-base correspondente e criar uma nova identificação/ID (identificador) específica.</li>
           <li>Conferir se conteúdos, materiais, manuais, regras de gamificação, acesso e tratamento dos dados estão adequados à modalidade.</li>
         </ul></td>
-        <td>Operações / TI</td>
+        <td>Operações / TI (Tecnologia da Informação)</td>
       </tr>
       <tr>
         <td class="c">3</td><td><b>Criação das turmas e acessos de gestão</b></td>
@@ -498,7 +544,7 @@
         <td class="c">5</td><td><b>Cadastro dos participantes</b></td>
         <td><ul>
           <li>Receber a listagem dos participantes e suas respectivas turmas.</li>
-          <li>Cadastrar os participantes por meio da API integrada ao sistema de cadastro (<code>/player/create</code>).</li>
+          <li>Cadastrar os participantes por meio da API (Interface de Programação de Aplicações) integrada ao sistema de cadastro (<code>/player/create</code>).</li>
           <li>Associar cada participante à sua turma (<code>/player/add-player-group</code>).</li>
           <li>Conferir os dados retornados pela API e verificar possíveis inconsistências.</li>
           <li>Novo parceiro: garantir que os participantes estejam vinculados ao novo ID específico do curso.</li>
@@ -541,7 +587,7 @@
         <td><ul>
           <li>Criar e manter o sistema de relatórios utilizado no acompanhamento dos projetos.</li>
           <li>Consolidar os dados necessários para o relatório semanal.</li>
-          <li>Preparar o relatório em HTML, com o layout e as informações definidas para o projeto.</li>
+          <li>Preparar o relatório em HTML (linguagem de páginas web), com o layout e as informações definidas para o projeto.</li>
           <li>Gerar a listagem de e-mails dos educadores e demais participantes.</li>
           <li>Conferir a lista de destinatários antes do envio e atualizá-la se houver novos educadores ou participantes.</li>
         </ul></td>
@@ -581,7 +627,7 @@
 </section>
 
 <section>
-  <h2>3. Matriz de Responsabilidades (RACI)</h2>
+  <h2>3. Matriz de Responsabilidades — RACI (Responsável, Aprovador, Consultado, Informado)</h2>
   <p class="sub">
     <b class="R">R</b> Responsável (executa) &nbsp;·&nbsp;
     <b class="A">A</b> Aprovador (responde pelo resultado) &nbsp;·&nbsp;
@@ -594,7 +640,7 @@
       <tr>
         <th>Atividade</th>
         <th style="text-align:center">Gestão de Projetos</th>
-        <th style="text-align:center">Operações / TI</th>
+        <th style="text-align:center">Operações / TI (Tecnologia da Informação)</th>
         <th style="text-align:center">Parceiro / Gestor Escolar</th>
         <th style="text-align:center">Educador</th>
         <th style="text-align:center">Participante</th>
@@ -603,11 +649,21 @@
     </thead>
     <tbody>
       <tr class="phase"><td colspan="7">Gestão e formalização</td></tr>
-      <tr><td>Enviar formulários de inscrição e formalização ao parceiro</td>
-        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c I">I</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
-      <tr><td>Preencher formulários e enviar listagem de participantes</td>
+      <tr><td>Enviar formulário de inscrição ao parceiro</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c">–</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Preencher formulário de inscrição</td>
+        <td class="c A">A</td><td class="c">–</td><td class="c R">R</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Verificar se a escola tem internet e laboratório de informática</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c C">C</td><td class="c C">C</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Enviar formulário de formalização (e cobrar, se não for devolvido)</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c">–</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Preencher e enviar formulário de formalização</td>
+        <td class="c A">A</td><td class="c">–</td><td class="c R">R</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Entrar em contato e pedir a listagem de participantes</td>
+        <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c">–</td><td class="c I">I</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Preencher e enviar listagem de participantes</td>
         <td class="c A">A</td><td class="c I">I</td><td class="c R">R</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
-      <tr><td><b>1.</b> Conferir e validar formulários e listagem</td>
+      <tr><td><b>1.</b> Conferir e validar a listagem de participantes</td>
         <td class="c"><span class="R">R</span>/<span class="A">A</span></td><td class="c C">C</td><td class="c C">C</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
 
       <tr class="phase"><td colspan="7">Configuração da plataforma</td></tr>
@@ -646,7 +702,7 @@
 </section>
 
 <section id="sla">
-  <h2>4. Prazos por atividade (SLA)</h2>
+  <h2>4. Prazos por atividade — SLA (Service Level Agreement – Acordo de Nível de Serviço)</h2>
   <p class="sub">
     Tempo máximo de cada atividade, contado em <b>dias úteis (d.u.)</b> a partir do gatilho de início.
     <span class="sla-pill">⏱ prazo da etapa</span>&nbsp;
@@ -709,9 +765,14 @@
    ===================================================================== */
 const SLA = [
   { fase: "Gestão e formalização" },
-  { etapa: "",   atividade: "Enviar formulários de inscrição e formalização", resp: "Gestão de Projetos",        tipo: "seq", dias: 1, inicio: "Entrada do novo parceiro", escala: "Coordenação do projeto", pos: [[175,240]] },
-  { etapa: "",   atividade: "Preencher formulários e enviar listagem de participantes", resp: "Parceiro / Gestor Escolar", tipo: "seq", dias: 5, inicio: "Recebimento dos formulários", escala: "Gestão de Projetos cobra o parceiro", pos: [[270,100]] },
-  { etapa: "1",  atividade: "Conferir e validar formulários e listagem", resp: "Gestão de Projetos",        tipo: "seq", dias: 2, inicio: "Recebimento da listagem", escala: "Coordenação do projeto", pos: [[385,240]] },
+  { etapa: "",   atividade: "Enviar formulário de inscrição", resp: "Gestão de Projetos", tipo: "seq", dias: 1, inicio: "Entrada do novo parceiro", escala: "Coordenação do projeto", ini: true, pos: [[180,240]] },
+  { etapa: "",   atividade: "Preencher formulário de inscrição", resp: "Parceiro / Gestor Escolar", tipo: "seq", dias: 5, inicio: "Recebimento do formulário de inscrição", escala: "Gestão de Projetos cobra o parceiro", ini: true, pos: [[270,100]] },
+  { etapa: "",   atividade: "Verificar internet e laboratório de informática", resp: "Gestão de Projetos", tipo: "seq", dias: 1, inicio: "Recebimento da inscrição", escala: "Coordenação do projeto", ini: true },
+  { etapa: "",   atividade: "Enviar formulário de formalização", resp: "Gestão de Projetos", tipo: "seq", dias: 1, inicio: "Infraestrutura confirmada", escala: "Coordenação do projeto", ini: true, pos: [[510,240]] },
+  { etapa: "",   atividade: "Preencher e enviar formulário de formalização", resp: "Parceiro / Gestor Escolar", tipo: "seq", dias: 5, inicio: "Recebimento do formulário de formalização", escala: "Gestão de Projetos cobra o parceiro", ini: true, pos: [[600,100]] },
+  { etapa: "",   atividade: "Entrar em contato e pedir a listagem de participantes", resp: "Gestão de Projetos", tipo: "seq", dias: 1, inicio: "Formalização recebida", escala: "Coordenação do projeto", ini: true, pos: [[840,240]] },
+  { etapa: "",   atividade: "Preencher e enviar listagem de participantes", resp: "Parceiro / Gestor Escolar", tipo: "seq", dias: 5, inicio: "Pedido da listagem", escala: "Gestão de Projetos cobra o parceiro", ini: true, pos: [[940,100]] },
+  { etapa: "1",  atividade: "Conferir e validar a listagem de participantes", resp: "Gestão de Projetos", tipo: "seq", dias: 2, inicio: "Recebimento da listagem", escala: "Coordenação do projeto", ini: true, pos: [[1045,240]] },
   { fase: "Configuração da plataforma" },
   { etapa: "2",  atividade: "Escolher curso-base, duplicar e gerar novo ID", resp: "Operações / TI", tipo: "seq", dias: 3, soNovo: true, inicio: "Validação aprovada", escala: "Gestão de Projetos", pos: [[1010,380],[1010,465]] },
   { etapa: "3",  atividade: "Criar turmas, associar ao curso e acessos dos gestores", resp: "Operações / TI", tipo: "seq", dias: 5, rotulo: "1 semana (5 d.u.)", inicio: "Curso com ID definido", escala: "Gestão de Projetos", pos: [[1235,297]] },
@@ -730,6 +791,7 @@ const SLA = [
 ];
 
 const RETORNOS = [
+  { decisao: "Formalização recebida?",        retorno: "Gestão de Projetos cobra o preenchimento do formulário de formalização", resp: "Gestão de Projetos", dias: 2 },
   { decisao: "Dados completos?",              retorno: "Parceiro corrige as pendências e reenvia a listagem", resp: "Parceiro / Gestor Escolar", dias: 3 },
   { decisao: "Inconsistências no retorno da API?", retorno: "Corrigir os cadastros com erro",                 resp: "Operações / TI",            dias: 1 },
   { decisao: "Tudo funcionando?",             retorno: "Ajustar a configuração e reenviar para aprovação",    resp: "Operações / TI",            dias: 1 },
@@ -756,6 +818,7 @@ function pillClass(a) { return a.tipo === "semanal" ? "wk" : a.tipo === "evento"
 /* ---- Selos no diagrama ---- */
 (function () {
   const svg = document.getElementById("bpmn");
+  const resto = document.getElementById("resto");
   const ns = "http://www.w3.org/2000/svg";
   const cores = { "": ["#E3F6FA", "#006C85"], wk: ["#FFF1DF", "#7A4300"], ev: ["#FBE7EF", "#C2185B"] };
   SLA.filter(a => a.pos).forEach(a => {
@@ -776,7 +839,7 @@ function pillClass(a) { return a.tipo === "semanal" ? "wk" : a.tipo === "evento"
       const title = document.createElementNS(ns, "title");
       title.textContent = "SLA: " + slaTexto(a) + " · começa: " + a.inicio;
       g.append(r, t, title);
-      svg.appendChild(g);
+      (a.ini ? svg : resto).appendChild(g);
     });
   });
 })();
